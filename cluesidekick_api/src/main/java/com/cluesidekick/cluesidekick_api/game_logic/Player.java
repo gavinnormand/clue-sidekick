@@ -37,4 +37,13 @@ public class Player {
         this.definitleyDontHave = new ArrayList<>();
         this.conditionals = new ArrayList<>();
     }
+
+    /**
+     * Updates the player's list of cards that they definitely don't have based on the provided guess.
+     *
+     * @return The name of the player.
+     */
+    public void updateDefinitleyDontHave(ArrayList<ACard> cards) {
+        this.definitleyDontHave.addAll(cards);
+    }
 }
