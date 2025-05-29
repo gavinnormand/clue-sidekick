@@ -34,6 +34,10 @@ public class Guess {
         return this.room;
     }
 
+    public ArrayList<ACard> getCards() {
+        return new ArrayList<ACard>(this.suspect, this.weapon, this.room);
+    }
+
 
 
 
