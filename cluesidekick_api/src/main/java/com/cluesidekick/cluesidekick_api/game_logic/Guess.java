@@ -1,4 +1,6 @@
 package com.cluesidekick.cluesidekick_api.game_logic;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * This class represents a guess in the ClueGame.
@@ -48,7 +50,7 @@ public class Guess {
     }
 
     public ArrayList<ACard> getCards() {
-        return new ArrayList<ACard>(this.suspect, this.weapon, this.room);
+        return new ArrayList<ACard>(Arrays.asList(this.suspect, this.weapon, this.room));
     }
 
 
