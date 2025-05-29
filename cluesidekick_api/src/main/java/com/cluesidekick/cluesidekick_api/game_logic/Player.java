@@ -46,4 +46,11 @@ public class Player {
     public void updateDefinitleyDontHave(ArrayList<ACard> cards) {
         this.definitleyDontHave.addAll(cards);
     }
+
+    /**
+     * Method to add condtional to a player
+     */
+    public void addConditional(Conditional cond) {
+        this.conditionals.add(cond);
+    }
 }
