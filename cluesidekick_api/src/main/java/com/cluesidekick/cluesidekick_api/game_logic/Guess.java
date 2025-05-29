@@ -22,14 +22,27 @@ public class Guess {
         this.room = room;
     }
 
+    /** Getter for Suspect
+     * 
+     * @return
+     */
     public ACard getSuspect() {
         return this.suspect;
     }
 
+
+    /**
+     * Getter for weapon
+     * @return
+     */
     public ACard getWeapon() {
         return this.weapon;
     }
 
+    /** Getter for room
+     * 
+     * @return
+     */
     public ACard getRoom() {
         return this.room;
     }
