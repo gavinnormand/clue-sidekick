@@ -21,4 +21,20 @@ public class Guess {
         this.weapon = weapon;
         this.room = room;
     }
+
+    public ACard getSuspect() {
+        return this.suspect;
+    }
+
+    public ACard getWeapon() {
+        return this.weapon;
+    }
+
+    public ACard getRoom() {
+        return this.room;
+    }
+
+
+
+
 }
