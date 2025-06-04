@@ -5,7 +5,7 @@ package com.cluesidekick.cluesidekick_api.game_logic;
  */
 public class ACard {
 
-    private String name;
+    private final String name;
 
     /**
      * Constructor to create a card with a given name.
@@ -14,6 +14,30 @@ public class ACard {
      */
     public ACard(String name) {
         this.name = name;
+    }
+
+    /**
+     * Determines if this ACard is equal to another object.
+     * @param obj The object to compare with.
+     * @return true if the object is an ACard with the same name, false otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!(obj instanceof ACard))
+            return false;
+        ACard other = (ACard) obj;
+        return name.equals(other.name);
+    }
+
+    /**
+     * Determines the hash code for this ACard.
+     * @return The hash code based on the card's name.
+     */
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 
 }

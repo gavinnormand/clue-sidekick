@@ -2,8 +2,6 @@ package com.cluesidekick.cluesidekick_api.game_logic;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * This class represents a guess in the ClueGame.
@@ -31,7 +29,7 @@ public class Guess {
      * 
      * @return
      */
-    public ACard getSuspect() {
+    public Suspect getSuspect() {
         return this.suspect;
     }
 
@@ -40,7 +38,7 @@ public class Guess {
      * Getter for weapon
      * @return
      */
-    public ACard getWeapon() {
+    public Weapon getWeapon() {
         return this.weapon;
     }
 
@@ -48,10 +46,15 @@ public class Guess {
      * 
      * @return
      */
-    public ACard getRoom() {
+    public Room getRoom() {
         return this.room;
     }
 
+    /**
+     * Returns an ArrayList of the cards in the guess.
+     *
+     * @return An ArrayList containing the suspect, weapon, and room.
+     */
     public ArrayList<ACard> getCards() {
         return new ArrayList<ACard>(Arrays.asList(this.suspect, this.weapon, this.room));
     }
