@@ -17,13 +17,22 @@ public class ClueGame {
      * @param players  The list of players in the game.
      * @param allCards The list of all cards in the game.
      */
-    public ClueGame(ArrayList<Player> players, ArrayList<ACard> allCards) {
+    public ClueGame(ArrayList<Player> players, ArrayList<ACard> allCards, ArrayList<ACard> publicCards, ArrayList<ACard> myCards) {
         this.players = players;
         this.allCards = allCards;
+        for (Player player : players) {
+            player.updateDefinitelyDontHave(allCards);
+            if (player.isMe()) {
+                player.updateDefinitelyHave(myCards);
+            } 
+            else {
+                player.updateDefinitelyDontHave(myCards);
+            }
+        }
     }
 
     /**
-     * Handles a player's guess in the game that noone says yes to
+     * Handles a player's guess in the game that no one says yes to
      *
      * @param player The player making the guess.
      * @param guess  The guess made by the player, which includes a suspect, weapon,
@@ -33,7 +42,7 @@ public class ClueGame {
         for (int i = 1; i < this.players.size(); i++) {
             int index = (this.players.indexOf(guesser) + i) % this.players.size();
 
-            this.players.get(index).updateDefinitleyDontHave(guess.getCards());
+            this.players.get(index).updateDefinitelyDontHave(guess.getCards());
         }
         this.updateUntilStable();
     }
@@ -51,7 +60,7 @@ public class ClueGame {
         for (int i = 1; i <= this.playersBetween(guesser, responder); i++) {
             int index = (this.players.indexOf(guesser) + i) % this.players.size();
 
-            this.players.get(index).updateDefinitleyDontHave(guess.getCards());
+            this.players.get(index).updateDefinitelyDontHave(guess.getCards());
         }
         responder.addConditional(new Conditional(guess.getCards()));
         this.updateUntilStable();
@@ -65,10 +74,10 @@ public class ClueGame {
      * @param card   The card that the player has.
      */
     public void markPlayerHasCard(Player player, ACard card) {
-        player.updateDefinitleyHave(card);
+        player.updateDefinitelyHave(card);
         for (Player otherPlayer : players) {
             if (!otherPlayer.equals(player)) {
-                otherPlayer.updateDefinitleyDontHave(card);
+                otherPlayer.updateDefinitelyDontHave(card);
             }
         }
     }
@@ -87,7 +96,7 @@ public class ClueGame {
         for (int i = 1; i <= this.playersBetween(guesser, responder); i++) {
             int index = (this.players.indexOf(guesser) + i) % this.players.size();
 
-            this.players.get(index).updateDefinitleyDontHave(guess.getCards());
+            this.players.get(index).updateDefinitelyDontHave(guess.getCards());
         }
         this.markPlayerHasCard(responder, shown);
         this.updateUntilStable();
@@ -139,5 +148,13 @@ public class ClueGame {
         while (performSingleUpdatePass()) {
             // Keep updating until no more changes
         }
+    }
+
+    public ArrayList<ACard> getAllDefinitelyHeldCards() {
+        ArrayList<ACard> definitelyHeldCards = new ArrayList<>();
+        for (Player player : players) {
+            definitelyHeldCards.addAll(player.getDefinitelyHave());
+        }
+        return definitelyHeldCards;
     }
 }

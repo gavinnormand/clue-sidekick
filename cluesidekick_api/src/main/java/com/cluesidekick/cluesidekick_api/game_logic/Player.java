@@ -1,6 +1,7 @@
 package com.cluesidekick.cluesidekick_api.game_logic;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * This class represents a player in the ClueGame.
@@ -8,8 +9,8 @@ import java.util.ArrayList;
 public class Player {
 
     private final String name;
-    private ArrayList<ACard> definitleyHave;
-    private ArrayList<ACard> definitleyDontHave;
+    private ArrayList<ACard> definitelyHave;
+    private ArrayList<ACard> definitelyDontHave;
     private ArrayList<Conditional> conditionals;
 
     /**
@@ -19,8 +20,8 @@ public class Player {
      */
     public Player(String name) {
         this.name = name;
-        this.definitleyHave = new ArrayList<>();
-        this.definitleyDontHave = new ArrayList<>();
+        this.definitelyHave = new ArrayList<>();
+        this.definitelyDontHave = new ArrayList<>();
         this.conditionals = new ArrayList<>();
     }
 
@@ -29,13 +30,31 @@ public class Player {
      * definitely have.
      *
      * @param name           The name of the player.
-     * @param definitleyHave The list of cards that the player definitely has.
+     * @param definitelyHave The list of cards that the player definitely has.
      */
-    public Player(String name, ArrayList<ACard> definitleyHave) {
+    public Player(String name, ArrayList<ACard> definitelyHave) {
         this.name = name;
-        this.definitleyHave = definitleyHave;
-        this.definitleyDontHave = new ArrayList<>();
+        this.definitelyHave = definitelyHave;
+        this.definitelyDontHave = new ArrayList<>();
         this.conditionals = new ArrayList<>();
+    }
+
+    /**
+     * Determines if the user is this Player.
+     * 
+     * @return true if the player is "Me", false otherwise.
+     */
+    public boolean isMe() {
+        return this.name.equals("Me");
+    }
+
+    /**
+     * Returns the cards that the player definitely does have.
+     * 
+     * @return A collection of ACard objects that the player definitely has.
+     */
+    public Collection<ACard> getDefinitelyHave() {
+        return this.definitelyHave;
     }
 
     /**
@@ -43,9 +62,20 @@ public class Player {
      *
      * @param card The card to add.
      */
-    public void updateDefinitleyHave(ACard card) {
-        if (!this.definitleyHave.contains(card)) {
-            this.definitleyHave.add(card);
+    public void updateDefinitelyHave(ACard card) {
+        if (!this.definitelyHave.contains(card)) {
+            this.definitelyHave.add(card);
+        }
+    }
+
+    /**
+     * Adds a list of cards to the player's definitely have list.
+     *
+     * @param card The list of cards to add, as an ArrayList of ACard.
+     */
+    public void updateDefinitelyHave(ArrayList<ACard> cards) {
+        for (ACard card : cards) {
+            this.updateDefinitelyHave(card);
         }
     }
 
@@ -55,28 +85,26 @@ public class Player {
      * 
      * @param card The card to add to the definitely don't have list.
      */
-    public void updateDefinitleyDontHave(ACard card) {
-        if (!this.definitleyDontHave.contains(card)) {
-            this.definitleyDontHave.add(card);
+    public void updateDefinitelyDontHave(ACard card) {
+        if (!this.definitelyDontHave.contains(card)) {
+            this.definitelyDontHave.add(card);
         }
     }
 
-    /** 
+    /**
      * Updates the player's list of cards that they definitely don't have based on
      * the provided guess.
      *
      * @param cards The list of cards to add to the definitely don't have list.
      */
-    public void updateDefinitleyDontHave(ArrayList<ACard> cards) {
+    public void updateDefinitelyDontHave(ArrayList<ACard> cards) {
         for (ACard card : cards) {
-            if (!this.definitleyDontHave.contains(card)) {
-                this.definitleyDontHave.add(card);
-            }
+            this.updateDefinitelyDontHave(card);
         }
     }
 
     /**
-     * Method to add condtional to a player
+     * Method to add conditional to a player
      */
     public void addConditional(Conditional cond) {
         this.conditionals.add(cond);
@@ -92,7 +120,7 @@ public class Player {
         ArrayList<ACard> resolvedCards = new ArrayList<>();
         ArrayList<Conditional> resolvedConditionals = new ArrayList<>();
         for (Conditional cond : this.conditionals) {
-            ACard resolvedCard = cond.resolve(this.definitleyDontHave);
+            ACard resolvedCard = cond.resolve(this.definitelyDontHave);
             if (resolvedCard != null) {
                 resolvedCards.add(resolvedCard);
                 resolvedConditionals.add(cond);
