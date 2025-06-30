@@ -4,7 +4,7 @@ import Welcome from "./components/Welcome.vue";
 import FormController from "./components/FormController.vue";
 import GameView from "./components/GameView.vue";
 import { ref } from "vue";
-import type { GameInfo } from "./types/GameInfo";
+import type { GameInfo, TurnInfo } from "./components/types";
 
 const step = ref(1);
 
@@ -22,6 +22,7 @@ const gameInfo = ref<GameInfo>({
     shownCards: [],
     userCards: [],
   },
+  turnHistory: [],
 });
 
 function updateGameInfo(newGameInfo: GameInfo) {
@@ -34,6 +35,26 @@ function goToStep2() {
 
 function goToStep3() {
   step.value = 3;
+}
+
+async function handleTurnComplete(turn: TurnInfo) {
+  gameInfo.value.turnHistory = [...(gameInfo.value.turnHistory || []), turn];
+  
+  // Make your API call here
+  try {
+    const response = await fetch('/api/analyze-turn', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        gameState: gameInfo.value,
+        newTurn: turn
+      })
+    });
+    
+    // Handle response...
+  } catch (error) {
+    console.error('Failed to analyze turn:', error);
+  }
 }
 </script>
 
@@ -49,6 +70,6 @@ function goToStep3() {
       @next="goToStep3"
     />
 
-    <GameView v-if="step === 3" :modelValue="gameInfo" />
+    <GameView v-if="step === 3" :modelValue="gameInfo" @turn-complete="handleTurnComplete" />
   </div>
 </template>

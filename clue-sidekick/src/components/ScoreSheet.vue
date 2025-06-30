@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { Square } from "lucide-vue-next";
 import { SquareX } from "lucide-vue-next";
-import { SquareCheck } from 'lucide-vue-next';
+import { SquareCheck } from "lucide-vue-next";
 
 const props = defineProps({
   modelValue: {
@@ -31,25 +31,25 @@ const props = defineProps({
 
 const unknownSuspects = computed(() => {
   return props.modelValue.boardInfo.suspects.filter(
-    (suspect) => !props.heldCards.includes(suspect),
+    (suspect: string) => !props.heldCards.includes(suspect),
   );
 });
 
 const unknownWeapons = computed(() => {
   return props.modelValue.boardInfo.weapons.filter(
-    (weapon) => !props.heldCards.includes(weapon),
+    (weapon: string) => !props.heldCards.includes(weapon),
   );
 });
 
 const unknownRooms = computed(() => {
   return props.modelValue.boardInfo.rooms.filter(
-    (room) => !props.heldCards.includes(room),
+    (room: string) => !props.heldCards.includes(room),
   );
 });
 </script>
 
 <template>
-  <div class="m-6">
+  <div class="w-full">
     <h2 class="mb-2 text-2xl font-bold">Score Sheet</h2>
     <div class="border-2 border-black bg-white text-black">
       <h3 class="border-b border-black px-2 py-1 text-lg font-semibold">
@@ -64,15 +64,15 @@ const unknownRooms = computed(() => {
           <span class="col-start-1 text-left">
             {{ suspect }}
           </span>
-          <SquareX v-if="props.heldCards.includes(suspect)" class="col-start-2 mx-auto h-6 w-6 text-red-600" />
+          <SquareX
+            v-if="props.heldCards.includes(suspect)"
+            class="col-start-2 mx-auto h-6 w-6 text-red-600"
+          />
           <SquareCheck
             v-else-if="unknownSuspects.length === 1"
             class="col-start-2 mx-auto h-6 w-6 text-green-600"
           />
-          <Square
-            v-else
-            class="col-start-2 mx-auto h-6 w-6 text-black"
-          />
+          <Square v-else class="col-start-2 mx-auto h-6 w-6 text-black" />
         </li>
       </ul>
       <h3 class="border-b border-black px-2 py-1 text-lg font-semibold">
@@ -87,15 +87,15 @@ const unknownRooms = computed(() => {
           <span class="col-start-1 text-left">
             {{ weapon }}
           </span>
-          <SquareX v-if="props.heldCards.includes(weapon)" class="col-start-2 mx-auto h-6 w-6 text-red-600" />
+          <SquareX
+            v-if="props.heldCards.includes(weapon)"
+            class="col-start-2 mx-auto h-6 w-6 text-red-600"
+          />
           <SquareCheck
             v-else-if="unknownWeapons.length === 1"
             class="col-start-2 mx-auto h-6 w-6 text-green-600"
           />
-          <Square
-            v-else
-            class="col-start-2 mx-auto h-6 w-6 text-black"
-          />
+          <Square v-else class="col-start-2 mx-auto h-6 w-6 text-black" />
         </li>
       </ul>
       <h3 class="border-b border-black px-2 py-1 text-lg font-semibold">
@@ -110,15 +110,15 @@ const unknownRooms = computed(() => {
           <span class="col-start-1 text-left">
             {{ room }}
           </span>
-          <SquareX v-if="props.heldCards.includes(room)" class="col-start-2 mx-auto h-6 w-6 text-red-600" />
+          <SquareX
+            v-if="props.heldCards.includes(room)"
+            class="col-start-2 mx-auto h-6 w-6 text-red-600"
+          />
           <SquareCheck
             v-else-if="unknownRooms.length === 1"
             class="col-start-2 mx-auto h-6 w-6 text-green-600"
           />
-          <Square
-            v-else
-            class="col-start-2 mx-auto h-6 w-6 text-black"
-          />
+          <Square v-else class="col-start-2 mx-auto h-6 w-6 text-black" />
         </li>
       </ul>
     </div>

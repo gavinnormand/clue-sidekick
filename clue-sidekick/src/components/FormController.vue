@@ -3,7 +3,7 @@ import BoardInfoForm from "./FormPages/BoardInfoForm.vue";
 import { ref, computed } from "vue";
 import PlayerInfoForm from "./FormPages/PlayerInfoForm.vue";
 import CardInfoForm from "./FormPages/CardInfoForm.vue";
-import type { GameInfo } from "./types/GameInfo";
+import type { BoardInfo, CardInfo, GameInfo, PlayerInfo } from "./types";
 
 const emit = defineEmits(["update:modelValue", "next"]);
 

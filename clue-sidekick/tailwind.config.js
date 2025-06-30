@@ -9,6 +9,7 @@ export default {
       },
       colors: {
         background: "#2d2d2d",
+        backgroundHover: "#3a3a3a",
       },
     },
   },

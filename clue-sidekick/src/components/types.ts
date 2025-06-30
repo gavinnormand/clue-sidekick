@@ -15,7 +15,17 @@ export interface CardInfo {
 }
 
 export interface GameInfo {
-  board: BoardInfo;
-  players: PlayerInfo;
-  cards: CardInfo;
+  boardInfo: BoardInfo;
+  playerInfo: PlayerInfo;
+  cardInfo: CardInfo;
+  turnHistory: TurnInfo[];
+}
+
+export interface TurnInfo {
+  player: string;
+  suspect: string;            
+  weapon: string;
+  room: string;
+  showedBy: string | null;
+  cardShown: string | null;
 }
