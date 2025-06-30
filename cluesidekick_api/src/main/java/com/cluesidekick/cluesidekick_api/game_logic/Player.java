@@ -130,6 +130,21 @@ public class Player {
         return resolvedCards;
     }
 
+    /**
+     * Gets the name of the player.
+     * 
+     * @return The name of the player, as a String
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Determines if this Player is equal to another object.
+     * 
+     * @param obj The object to compare with.
+     * @return true if the object is a Player with the same name, false otherwise.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -140,6 +155,11 @@ public class Player {
         return name.equals(other.name);
     }
 
+    /**
+     * Determines the hash code for this Player.
+     * 
+     * @return The hash code based on the player's name.
+     */
     @Override
     public int hashCode() {
         return name.hashCode();

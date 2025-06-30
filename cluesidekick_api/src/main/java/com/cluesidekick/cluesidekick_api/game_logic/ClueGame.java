@@ -17,15 +17,15 @@ public class ClueGame {
      * @param players  The list of players in the game.
      * @param allCards The list of all cards in the game.
      */
-    public ClueGame(ArrayList<Player> players, ArrayList<ACard> allCards, ArrayList<ACard> publicCards, ArrayList<ACard> myCards) {
+    public ClueGame(ArrayList<Player> players, ArrayList<ACard> allCards, ArrayList<ACard> publicCards,
+            ArrayList<ACard> myCards) {
         this.players = players;
         this.allCards = allCards;
         for (Player player : players) {
             player.updateDefinitelyDontHave(allCards);
             if (player.isMe()) {
                 player.updateDefinitelyHave(myCards);
-            } 
-            else {
+            } else {
                 player.updateDefinitelyDontHave(myCards);
             }
         }
@@ -150,11 +150,36 @@ public class ClueGame {
         }
     }
 
+    /**
+     * Gets all cards that are definitely held by any player in the game.
+     * This method iterates through all players and collects cards that they have
+     * marked as definitely held.
+     * 
+     * @return An ArrayList of ACard objects that are definitely held by players.
+     */
     public ArrayList<ACard> getAllDefinitelyHeldCards() {
         ArrayList<ACard> definitelyHeldCards = new ArrayList<>();
         for (Player player : players) {
             definitelyHeldCards.addAll(player.getDefinitelyHave());
         }
         return definitelyHeldCards;
+    }
+
+    /**
+     * Gets the list of players in the game.
+     * 
+     * @return An ArrayList of Player objects representing the players in the game.
+     */
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    /**
+     * Gets all cards in the game.
+     * 
+     * @return An ArrayList of ACard objects representing all cards in the game.
+     */
+    public ArrayList<ACard> getAllCards() {
+        return allCards;
     }
 }

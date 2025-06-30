@@ -17,6 +17,14 @@ public class ACard {
     }
 
     /**
+     * Gets the name of the card.
+     * @return The name of the card, as a String
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
      * Determines if this ACard is equal to another object.
      * @param obj The object to compare with.
      * @return true if the object is an ACard with the same name, false otherwise.
