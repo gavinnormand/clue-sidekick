@@ -108,6 +108,8 @@ public class Player {
      */
     public void addConditional(Conditional cond) {
         this.conditionals.add(cond);
+        System.out.println("Definitely Have" + this.definitelyHave);
+        System.out.println("Definitely Dont Have" + this.definitelyDontHave);
     }
 
     /**

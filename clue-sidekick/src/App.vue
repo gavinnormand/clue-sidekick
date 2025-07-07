@@ -5,6 +5,7 @@ import FormController from "./components/FormController.vue";
 import GameView from "./components/GameView.vue";
 import { ref } from "vue";
 import type { GameInfo, TurnInfo } from "./components/types";
+import { initializeGame, processGuess } from "./api/gameApi";
 
 const step = ref(1);
 
@@ -25,6 +26,8 @@ const gameInfo = ref<GameInfo>({
   turnHistory: [],
 });
 
+const definitelyHeldCards = ref<string[]>([]);
+
 function updateGameInfo(newGameInfo: GameInfo) {
   gameInfo.value = newGameInfo;
 }
@@ -33,27 +36,27 @@ function goToStep2() {
   step.value = 2;
 }
 
-function goToStep3() {
+async function goToStep3() {
   step.value = 3;
+
+  try {
+    const result = await initializeGame(gameInfo.value);
+    definitelyHeldCards.value = result.definitelyHeldCards;
+    console.log("Game initialized, held cards:", definitelyHeldCards.value);
+  } catch (error) {
+    console.error("Failed to initialize game:", error);
+  }
 }
 
 async function handleTurnComplete(turn: TurnInfo) {
   gameInfo.value.turnHistory = [...(gameInfo.value.turnHistory || []), turn];
-  
-  // Make your API call here
+
   try {
-    const response = await fetch('/api/analyze-turn', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        gameState: gameInfo.value,
-        newTurn: turn
-      })
-    });
-    
-    // Handle response...
+    const result = await processGuess(turn);
+    definitelyHeldCards.value = result.definitelyHeldCards;
+    console.log("Updated held cards:", definitelyHeldCards.value);
   } catch (error) {
-    console.error('Failed to analyze turn:', error);
+    console.error("Failed to process turn:", error);
   }
 }
 </script>
@@ -70,6 +73,11 @@ async function handleTurnComplete(turn: TurnInfo) {
       @next="goToStep3"
     />
 
-    <GameView v-if="step === 3" :modelValue="gameInfo" @turn-complete="handleTurnComplete" />
+    <GameView
+      v-if="step === 3"
+      :modelValue="gameInfo"
+      :definitelyHeldCards="definitelyHeldCards"
+      @turn-complete="handleTurnComplete"
+    />
   </div>
 </template>

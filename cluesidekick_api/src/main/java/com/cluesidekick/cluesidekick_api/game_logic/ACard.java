@@ -18,6 +18,7 @@ public class ACard {
 
     /**
      * Gets the name of the card.
+     * 
      * @return The name of the card, as a String
      */
     public String getName() {
@@ -26,6 +27,7 @@ public class ACard {
 
     /**
      * Determines if this ACard is equal to another object.
+     * 
      * @param obj The object to compare with.
      * @return true if the object is an ACard with the same name, false otherwise.
      */
@@ -41,11 +43,24 @@ public class ACard {
 
     /**
      * Determines the hash code for this ACard.
+     * 
      * @return The hash code based on the card's name.
      */
     @Override
     public int hashCode() {
         return name.hashCode();
+    }
+
+    /**
+     * Returns a string representation of the ACard.
+     * 
+     * @return A string that includes the card's name.
+     */
+    @Override
+    public String toString() {
+        return "ACard{" +
+                "name='" + name + '\'' +
+                '}';
     }
 
 }

@@ -46,6 +46,8 @@ public class GameService {
             publicCards.add(findCard(allCards, cardName));
         }
 
+        System.out.println("Public cards: " + publicCards);
+
         this.currentGame = new ClueGame(players, allCards, publicCards, myCards);
 
         return new HeldCardsDto(getHeldCardNames());

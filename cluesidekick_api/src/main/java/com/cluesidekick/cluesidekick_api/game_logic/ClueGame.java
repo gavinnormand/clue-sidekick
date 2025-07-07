@@ -9,6 +9,7 @@ public class ClueGame {
 
     private ArrayList<Player> players;
     private ArrayList<ACard> allCards;
+    private ArrayList<ACard> publicCards;
 
     /**
      * Constructor to create a ClueGame with a list of players, number of players,
@@ -21,13 +22,17 @@ public class ClueGame {
             ArrayList<ACard> myCards) {
         this.players = players;
         this.allCards = allCards;
+        this.publicCards = publicCards;
         for (Player player : players) {
-            player.updateDefinitelyDontHave(allCards);
             if (player.isMe()) {
                 player.updateDefinitelyHave(myCards);
             } else {
                 player.updateDefinitelyDontHave(myCards);
             }
+        }
+
+        for (Player player : players) {
+            player.updateDefinitelyDontHave(publicCards);
         }
     }
 
@@ -64,6 +69,7 @@ public class ClueGame {
         }
         responder.addConditional(new Conditional(guess.getCards()));
         this.updateUntilStable();
+        System.out.println("Guess Made");
     }
 
     /**
@@ -158,10 +164,11 @@ public class ClueGame {
      * @return An ArrayList of ACard objects that are definitely held by players.
      */
     public ArrayList<ACard> getAllDefinitelyHeldCards() {
-        ArrayList<ACard> definitelyHeldCards = new ArrayList<>();
+        ArrayList<ACard> definitelyHeldCards = new ArrayList<>(this.publicCards);
         for (Player player : players) {
             definitelyHeldCards.addAll(player.getDefinitelyHave());
         }
+        System.out.println("All held cards gotten!");
         return definitelyHeldCards;
     }
 

@@ -9,6 +9,10 @@ const props = defineProps({
     type: Object as () => GameInfo,
     required: true,
   },
+  definitelyHeldCards: {
+    type: Array as () => string[],
+    default: () => [],
+  },
 });
 
 const heldCards = computed(() => {
@@ -32,7 +36,10 @@ function handleTurnComplete(turn: TurnInfo) {
 
 <template>
   <div class="flex flex-row justify-between gap-4 p-4">
-    <ScoreSheet :modelValue="modelValue" :heldCards="heldCards" />
+    <ScoreSheet
+      :modelValue="modelValue"
+      :heldCards="definitelyHeldCards"
+    />
     <ChatBox :game-info="modelValue" @turn-complete="handleTurnComplete" />
   </div>
 </template>
