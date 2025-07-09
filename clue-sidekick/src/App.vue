@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
 import Welcome from "./components/Welcome.vue";
 import FormController from "./components/FormController.vue";
 import GameView from "./components/GameView.vue";
@@ -62,22 +63,25 @@ async function handleTurnComplete(turn: TurnInfo) {
 </script>
 
 <template>
-  <div class="bg-background">
+  <div class="flex min-h-screen flex-col bg-backgroundHover">
     <Header />
-    <Welcome v-if="step === 1" @next="goToStep2" />
+    <div class="flex-1">
+      <Welcome v-if="step === 1" @next="goToStep2" />
 
-    <FormController
-      v-if="step === 2"
-      :modelValue="gameInfo"
-      @update:modelValue="updateGameInfo"
-      @next="goToStep3"
-    />
+      <FormController
+        v-if="step === 2"
+        :modelValue="gameInfo"
+        @update:modelValue="updateGameInfo"
+        @next="goToStep3"
+      />
 
-    <GameView
-      v-if="step === 3"
-      :modelValue="gameInfo"
-      :definitelyHeldCards="definitelyHeldCards"
-      @turn-complete="handleTurnComplete"
-    />
+      <GameView
+        v-if="step === 3"
+        :modelValue="gameInfo"
+        :definitelyHeldCards="definitelyHeldCards"
+        @turn-complete="handleTurnComplete"
+      />
+    </div>
+    <Footer />
   </div>
 </template>

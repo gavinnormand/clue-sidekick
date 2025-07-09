@@ -185,7 +185,7 @@ const canSubmitGuess = computed(
         <button
           @click="submitGuess"
           :disabled="!canSubmitGuess"
-          class="w-full rounded-md bg-emerald-600 px-4 py-2 text-white transition-colors hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-gray-300"
+          class="w-full rounded-md bg-emerald-500 px-4 py-2 text-white transition-colors hover:bg-emerald-600 disabled:cursor-not-allowed disabled:bg-gray-300"
         >
           Submit Guess
         </button>
@@ -206,7 +206,7 @@ const canSubmitGuess = computed(
 
         <button
           @click="selectWhoShowed(null)"
-          class="block w-full rounded-md bg-red-600 p-3 font-medium text-white transition-colors hover:bg-red-500"
+          class="block w-full rounded-md bg-red-500 p-3 font-medium text-white transition-colors hover:bg-red-600"
         >
           No one could show a card
         </button>

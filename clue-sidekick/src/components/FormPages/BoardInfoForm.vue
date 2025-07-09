@@ -93,7 +93,7 @@ const rooms = computed({
     <div class="flex items-center justify-center">
       <button
         type="button"
-        class="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1 text-xl hover:bg-emerald-500"
+        class="inline-flex items-center gap-1 rounded-lg bg-emerald-500 px-3 py-1 text-xl hover:bg-emerald-600"
         @click.prevent="next()"
       >
         Next
