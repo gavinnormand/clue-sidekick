@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = { "http://localhost:5173", "https://cluesidekick.vercel.app" }, allowCredentials = "true")
 public class GameController {
 
     private final GameService gameService;
