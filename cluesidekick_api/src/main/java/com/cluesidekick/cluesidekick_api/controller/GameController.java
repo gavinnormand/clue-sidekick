@@ -4,10 +4,16 @@ import com.cluesidekick.cluesidekick_api.dto.*;
 import com.cluesidekick.cluesidekick_api.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
+@Service
+@CrossOrigin(origins = {
+        "http://localhost:5173",
+        "https://cluesidekick.vercel.app"
+}, allowCredentials = "true")
 public class GameController {
 
     private final GameService gameService;
