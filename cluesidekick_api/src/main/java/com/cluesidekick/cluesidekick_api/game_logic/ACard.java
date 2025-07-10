@@ -3,7 +3,7 @@ package com.cluesidekick.cluesidekick_api.game_logic;
 /**
  * This class represents a card in the ClueGame.
  */
-public class ACard {
+public abstract class ACard {
 
     private final String name;
 

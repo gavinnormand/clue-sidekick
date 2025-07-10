@@ -42,6 +42,7 @@ public class ClueGame {
         }
     }
 
+
     /**
      * Handles a player's guess in the game that no one says yes to
      *
@@ -321,4 +322,95 @@ public class ClueGame {
 
         this.updateUntilStable();
     }
+
+    /**
+     * Finds the best guess for the player based on the current game state.
+     */
+    public Guess findBestGuess() {
+        ArrayList<ACard> suspects = getUnknownCardsOfType(Suspect.class);
+        ArrayList<ACard> weapons = getUnknownCardsOfType(Weapon.class);
+        ArrayList<ACard> Rooms = getUnknownCardsOfType(Room.class);
+
+        Guess bestGuess = null;
+        int bestScore = -1;
+        
+        /**
+         * Loop through all combinations of suspects, weapons, and rooms
+         * to find the best guess based on the score.
+         */
+        for (Suspect suspect : suspects) {
+            for (Weapon weapon : weapons) {
+                for (Room room : Rooms) {
+                    Guess guess = new Guess(suspect, weapon, room);
+                    int score = this.scoreGuess(guess);
+
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestGuess = guess;
+                    }
+                }
+            }
+        }
+
+        return bestGuess;
+    }
+
+    /**
+     * Scores a guess based on how many players could potentially hold the cards
+     * in the guess.
+     */
+    private int scoreGuess(Guess guess) {
+        int score = 0;
+
+        for (ACard card : guess.getCards()) {
+            int possibleHolders = 0;
+
+            for (Player player : players) {
+                if (!player.getDefinitelyHave().contains(card) &&
+                    !player.getDefinitelyDontHave().contains(card)) {
+                    possibleHolders++;
+                }
+            }
+
+            if (possibleHolders == 0) {
+                score += 5; 
+            } else if (possibleHolders == 1) {
+                score += 3; 
+            } else if (possibleHolders == 2) {
+                score += 1; 
+            }
+        }
+
+        return score;
+    }
+
+
+
+    /**
+     * Gets all cards of a specific type that are not definitely held by any
+     * player.
+     */
+    private ArrayList<ACard> getUnknownCardsOfType(Class<? extends ACard> cardType) {
+        ArrayList<ACard> result = new ArrayList<>();
+
+        for (ACard card : allCards) {
+            if (!cardType.isInstance(card)) continue;
+
+            boolean isHeldBySomeone = false;
+            for (Player player : players) {
+                if (player.getDefinitelyHave().contains(card)) {
+                    isHeldBySomeone = true;
+                    break;
+                }
+            }
+
+            if (!isHeldBySomeone) {
+                result.add(card);
+            }
+        }
+
+        return result;
+    }
+
+
 }
