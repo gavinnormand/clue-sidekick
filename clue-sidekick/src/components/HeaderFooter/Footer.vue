@@ -10,7 +10,7 @@ import { Link } from "lucide-vue-next";
     <p class="text-right">
       <a
         href="https://www.gavinnormand.com/"
-        class="inline-flex items-center hover:underline gap-2"
+        class="flex justify-self-end items-center hover:underline gap-2"
       >
         <Link /> gavinnormand.com</a
       >

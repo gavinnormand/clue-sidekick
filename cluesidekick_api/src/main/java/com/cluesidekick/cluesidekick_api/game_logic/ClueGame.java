@@ -23,9 +23,15 @@ public class ClueGame {
         this.players = players;
         this.allCards = allCards;
         this.publicCards = publicCards;
+
         for (Player player : players) {
             if (player.isMe()) {
                 player.updateDefinitelyHave(myCards);
+                for (ACard card : allCards) {
+                    if (!myCards.contains(card)) {
+                        player.updateDefinitelyDontHave(card);
+                    }
+                }
             } else {
                 player.updateDefinitelyDontHave(myCards);
             }
@@ -69,7 +75,6 @@ public class ClueGame {
         }
         responder.addConditional(new Conditional(guess.getCards()));
         this.updateUntilStable();
-        System.out.println("Guess Made");
     }
 
     /**
@@ -168,8 +173,114 @@ public class ClueGame {
         for (Player player : players) {
             definitelyHeldCards.addAll(player.getDefinitelyHave());
         }
-        System.out.println("All held cards gotten!");
+
+        addOtherCardsWhenSolutionFound(definitelyHeldCards);
+
+        System.out.println("Definitely held cards: " + definitelyHeldCards);
+
         return definitelyHeldCards;
+    }
+
+    /**
+     * When exactly one card of a type is not held, all OTHER cards of that type
+     * must be marked as held (since one is in solution, all others must be held).
+     * 
+     * @param definitelyHeldCards - The list of cards that are definitely held by
+     *                            players.
+     */
+    private void addOtherCardsWhenSolutionFound(ArrayList<ACard> definitelyHeldCards) {
+        ArrayList<ACard> allSuspects = new ArrayList<>();
+        ArrayList<ACard> allWeapons = new ArrayList<>();
+        ArrayList<ACard> allRooms = new ArrayList<>();
+
+        for (ACard card : allCards) {
+            if (card instanceof Suspect) {
+                allSuspects.add(card);
+            } else if (card instanceof Weapon) {
+                allWeapons.add(card);
+            } else if (card instanceof Room) {
+                allRooms.add(card);
+            }
+        }
+
+        // First, find cards that nobody has (solution cards)
+        ArrayList<ACard> solutionCards = findSolutionCards();
+
+        // Now check each category
+        addOthersIfSolutionFound(allSuspects, solutionCards, definitelyHeldCards);
+        addOthersIfSolutionFound(allWeapons, solutionCards, definitelyHeldCards);
+        addOthersIfSolutionFound(allRooms, solutionCards, definitelyHeldCards);
+    }
+
+    /**
+     * Find cards that no player has (these must be in the solution).
+     * 
+     * @return An ArrayList of ACard objects that are solution cards.
+     */
+    private ArrayList<ACard> findSolutionCards() {
+        ArrayList<ACard> solutionCards = new ArrayList<>();
+
+        for (ACard card : allCards) {
+            boolean isHeldByAnyone = false;
+
+            if (publicCards.contains(card)) {
+                isHeldByAnyone = true;
+            }
+
+            if (!isHeldByAnyone) {
+                for (Player player : players) {
+                    if (player.getDefinitelyHave().contains(card)) {
+                        isHeldByAnyone = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!isHeldByAnyone) {
+                boolean allPlayersDontHave = true;
+                for (Player player : players) {
+                    if (!player.getDefinitelyDontHave().contains(card)) {
+                        allPlayersDontHave = false;
+                        break;
+                    }
+                }
+
+                if (allPlayersDontHave) {
+                    solutionCards.add(card);
+                    System.out.println("Solution card found: " + card.getName());
+                }
+            }
+        }
+
+        return solutionCards;
+    }
+
+    /**
+     * If we found a solution card of this type, add all OTHER cards
+     * of this type to the definitely held list.
+     */
+    private void addOthersIfSolutionFound(ArrayList<ACard> cardsOfType,
+            ArrayList<ACard> solutionCards,
+            ArrayList<ACard> definitelyHeldCards) {
+        // Check if any card of this type is in the solution
+        ACard solutionCardOfType = null;
+        for (ACard card : cardsOfType) {
+            if (solutionCards.contains(card)) {
+                solutionCardOfType = card;
+                break;
+            }
+        }
+
+        // If we found a solution card of this type, all other cards of this type must
+        // be held
+        if (solutionCardOfType != null) {
+            for (ACard card : cardsOfType) {
+                if (!card.equals(solutionCardOfType) && !definitelyHeldCards.contains(card)) {
+                    definitelyHeldCards.add(card);
+                    System.out.println("Adding " + card.getName() + " to definitely held (solution found)");
+                }
+            }
+        }
     }
 
     /**
@@ -188,5 +299,26 @@ public class ClueGame {
      */
     public ArrayList<ACard> getAllCards() {
         return allCards;
+    }
+
+    /**
+     * Eliminates a player from the game, removing them from the rotation and
+     * making all their cards public knowledge.
+     * This method also updates all remaining players to know that they do not have
+     * the eliminated player's cards.
+     * 
+     * @param player - The player to be eliminated from the game.
+     */
+    public void eliminatePlayer(Player player) {
+        this.players.remove(player);
+
+        ArrayList<ACard> playerCards = new ArrayList<>(player.getDefinitelyHave());
+        this.publicCards.addAll(playerCards);
+
+        for (Player remainingPlayer : this.players) {
+            remainingPlayer.updateDefinitelyDontHave(playerCards);
+        }
+
+        this.updateUntilStable();
     }
 }

@@ -19,6 +19,7 @@ export interface GameInfo {
   playerInfo: PlayerInfo;
   cardInfo: CardInfo;
   turnHistory: TurnInfo[];
+  activePlayers?: string[];
 }
 
 export interface TurnInfo {
@@ -28,4 +29,6 @@ export interface TurnInfo {
   room: string;
   showedBy: string | null;
   cardShown: string | null;
+  isFinalGuess?: boolean;
+  wasCorrect?: boolean; 
 }

@@ -10,21 +10,26 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:5173")
 public class GameController {
-    
+
     private final GameService gameService;
-    
+
     @Autowired
     public GameController(GameService gameService) {
         this.gameService = gameService;
     }
-    
+
     @PostMapping("/initialize-game")
     public ResponseEntity<HeldCardsDto> initializeGame(@RequestBody GameSetupDto gameSetup) {
         return ResponseEntity.ok(gameService.initializeGame(gameSetup));
     }
-    
+
     @PostMapping("/process-guess")
     public ResponseEntity<HeldCardsDto> processGuess(@RequestBody GuessDto guess) {
         return ResponseEntity.ok(gameService.processGuess(guess));
+    }
+
+    @PostMapping("/reveal-player-cards")
+    public ResponseEntity<GameStateUpdateDto> revealPlayerCards(@RequestBody FailedPlayerCardsDto failedPlayerCards) {
+        return ResponseEntity.ok(gameService.revealPlayerCards(failedPlayerCards));
     }
 }

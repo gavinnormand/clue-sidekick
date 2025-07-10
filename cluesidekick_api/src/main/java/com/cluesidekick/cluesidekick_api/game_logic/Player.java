@@ -108,8 +108,6 @@ public class Player {
      */
     public void addConditional(Conditional cond) {
         this.conditionals.add(cond);
-        System.out.println("Definitely Have" + this.definitelyHave);
-        System.out.println("Definitely Dont Have" + this.definitelyDontHave);
     }
 
     /**
@@ -139,6 +137,16 @@ public class Player {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Returns the cards that the player definitely does not have.
+     * 
+     * @return A collection of ACard objects that the player definitely doesn't
+     *         have.
+     */
+    public Collection<ACard> getDefinitelyDontHave() {
+        return this.definitelyDontHave;
     }
 
     /**

@@ -46,8 +46,6 @@ public class GameService {
             publicCards.add(findCard(allCards, cardName));
         }
 
-        System.out.println("Public cards: " + publicCards);
-
         this.currentGame = new ClueGame(players, allCards, publicCards, myCards);
 
         return new HeldCardsDto(getHeldCardNames());
@@ -86,6 +84,24 @@ public class GameService {
         return new HeldCardsDto(getHeldCardNames());
     }
 
+    public GameStateUpdateDto revealPlayerCards(FailedPlayerCardsDto failedPlayerCards) {
+        if (currentGame == null) {
+            throw new IllegalStateException("Game not initialized");
+        }
+
+        Player failedPlayer = findPlayer(failedPlayerCards.getPlayerName());
+
+        ArrayList<ACard> allCards = currentGame.getAllCards();
+        for (String cardName : failedPlayerCards.getCards()) {
+            ACard card = findCard(allCards, cardName);
+            currentGame.markPlayerHasCard(failedPlayer, card);
+        }
+
+        currentGame.eliminatePlayer(failedPlayer);
+
+        return new GameStateUpdateDto(getHeldCardNames(), getActivePlayerNames());
+    }
+
     private List<String> getHeldCardNames() {
         ArrayList<ACard> heldCards = currentGame.getAllDefinitelyHeldCards();
         List<String> result = new ArrayList<>();
@@ -93,6 +109,18 @@ public class GameService {
             result.add(card.getName());
         }
         return result;
+    }
+
+    private List<String> getActivePlayerNames() {
+        List<String> activeNames = new ArrayList<>();
+        for (Player player : currentGame.getPlayers()) {
+            if (player.isMe()) {
+                activeNames.add(currentUser);
+            } else {
+                activeNames.add(player.getName());
+            }
+        }
+        return activeNames;
     }
 
     private Player findPlayer(String playerName) {

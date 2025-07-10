@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import ScoreSheet from "./ScoreSheet.vue";
+import ScoreSheet from "./GameComponents/ScoreSheet.vue";
 import type { GameInfo, TurnInfo } from "./types";
-import ChatBox from "./ChatBox.vue";
+import ChatBox from "./GameComponents/ChatBox.vue";
 
 const props = defineProps({
   modelValue: {
@@ -15,32 +14,33 @@ const props = defineProps({
   },
 });
 
-const heldCards = computed(() => {
-  const shown = props.modelValue.cardInfo?.shownCards ?? [];
-  const user = props.modelValue.cardInfo?.userCards ?? [];
-  console.log("Full modelValue:", props.modelValue);
-  console.log("cardInfo:", props.modelValue.cardInfo);
-  console.log("shown:", shown);
-  console.log("user:", user);
-  return shown.concat(user);
-});
-
 const emit = defineEmits<{
   "turn-complete": [turn: TurnInfo];
+  "game-won": [];
+  "failed-player-cards": [data: { player: string; cards: string[] }];
 }>();
 
 function handleTurnComplete(turn: TurnInfo) {
   emit("turn-complete", turn);
+}
+
+function handleFailedPlayerCards(data: { player: string; cards: string[] }) {
+  emit("failed-player-cards", data);
 }
 </script>
 
 <template>
   <div class="flex flex-row justify-between gap-4 p-4">
     <ScoreSheet
-      :modelValue="modelValue"
-      :heldCards="definitelyHeldCards"
+      :modelValue="props.modelValue"
+      :heldCards="props.definitelyHeldCards"
     />
-    <ChatBox :game-info="modelValue" @turn-complete="handleTurnComplete" />
+    <ChatBox
+      :game-info="modelValue"
+      @turn-complete="handleTurnComplete"
+      @game-won="() => emit('game-won')"
+      @failed-player-cards="handleFailedPlayerCards"
+    />
   </div>
 </template>
 
