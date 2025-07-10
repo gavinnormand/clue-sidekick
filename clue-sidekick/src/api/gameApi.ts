@@ -10,7 +10,6 @@ export async function initializeGame(gameInfo: GameInfo, signal?: AbortSignal) {
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
     body: JSON.stringify({
       suspects: gameInfo.boardInfo.suspects,
       weapons: gameInfo.boardInfo.weapons,
@@ -34,7 +33,6 @@ export async function processGuess(turn: any) {
   const response = await fetch(`${API_BASE_URL}/process-guess`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    credentials: "include",
     body: JSON.stringify(turn),
   });
 
@@ -49,7 +47,6 @@ export async function revealFailedPlayerCards(
   const response = await fetch(`${API_BASE_URL}/reveal-player-cards`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    credentials: "include",
     body: JSON.stringify({
       playerName: playerName,
       cards: cards,
