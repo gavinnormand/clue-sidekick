@@ -1,7 +1,7 @@
 import type { GameInfo } from "../components/types";
 
 const API_BASE_URL = import.meta.env.PROD
-  ? "https://cluesidekick-api.onrender.com/api"
+  ? "https://clue-sidekick-api.onrender.com/api"
   : "http://localhost:8080/api";
 
 export async function initializeGame(gameInfo: GameInfo, signal?: AbortSignal) {
