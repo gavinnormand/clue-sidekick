@@ -2,12 +2,17 @@ package com.cluesidekick.cluesidekick_api.service;
 
 import com.cluesidekick.cluesidekick_api.dto.*;
 import com.cluesidekick.cluesidekick_api.game_logic.*;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class GameService {
 
     private ClueGame currentGame;
