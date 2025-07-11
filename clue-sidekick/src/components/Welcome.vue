@@ -15,7 +15,9 @@ function next() {
 
 <template>
   <div class="flex flex-col items-center justify-center gap-6 px-4 py-12">
-    <h1 class="mx-auto px-12 mb-6 text-center font-sans text-6xl font-bold">
+    <h1
+      class="mx-auto mb-0 px-12 text-center font-sans text-3xl font-bold md:mb-6 md:text-6xl"
+    >
       Instant Feedback for Every Clue, <br />
       Every Time!
     </h1>
