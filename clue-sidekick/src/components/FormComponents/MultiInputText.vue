@@ -7,7 +7,6 @@
         ref="inputRef"
         v-model="input"
         @keydown.enter.prevent="addTag"
-        @keydown.tab.prevent="addTag"
         @keydown.delete="handleDelete"
         @blur="addTag"
         type="text"

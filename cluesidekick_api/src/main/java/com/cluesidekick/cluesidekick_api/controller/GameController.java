@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Service
-@CrossOrigin(origins = { "http://localhost:5173", "https://cluesidekick.vercel.app", "http://192.168.1.69:5173" })
+@CrossOrigin(origins = { "https://cluesidekick.vercel.app" })
 public class GameController {
 
     private final GameService gameService;
