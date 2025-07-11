@@ -191,7 +191,7 @@ const canSubmitGuess = computed(
 </script>
 
 <template>
-  <div class="w-full max-w-2xl">
+  <div class="w-full">
     <h2 class="mb-2 text-2xl font-bold">Clue Assistant</h2>
     <div class="rounded-lg border-2 border-black bg-white p-6">
       <div

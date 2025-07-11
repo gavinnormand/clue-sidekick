@@ -7,7 +7,6 @@
         ref="inputRef"
         v-model="input"
         @keydown.enter.prevent="addTag"
-        @keydown.tab.prevent="addTag"
         @keydown.delete="handleDelete"
         @blur="addTag"
         type="text"
@@ -23,6 +22,7 @@
       <div class="flex items-center">
         <p>{{ index + 1 }} . {{ tag }}</p>
         <button
+          tabindex="-1"
           class="pl-1 text-lg text-black hover:text-red-500"
           @click.stop="removeTag(index)"
         >

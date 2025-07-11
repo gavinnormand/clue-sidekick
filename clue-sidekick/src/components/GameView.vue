@@ -30,7 +30,7 @@ function handleFailedPlayerCards(data: { player: string; cards: string[] }) {
 </script>
 
 <template>
-  <div class="grid grid-cols-2 justify-between gap-4 p-4">
+  <div class="grid grid-cols-1 justify-between gap-4 p-4 md:grid-cols-2">
     <ScoreSheet
       :modelValue="props.modelValue"
       :heldCards="props.definitelyHeldCards"
