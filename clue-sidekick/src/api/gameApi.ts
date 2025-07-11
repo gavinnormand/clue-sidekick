@@ -1,6 +1,7 @@
 import type { GameInfo } from "../components/types";
 
-const API_BASE_URL = "https://cluesidekick.normand.space";
+//const API_BASE_URL = "https://cluesidekick.normand.space";
+const API_BASE_URL = "http://192.168.1.69:8080";
 
 export async function initializeGame(gameInfo: GameInfo, signal?: AbortSignal) {
   const response = await fetch(`${API_BASE_URL}/initialize-game`, {
