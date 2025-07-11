@@ -203,13 +203,11 @@ public class ClueGame {
             }
         }
 
-        // First, find cards that nobody has (solution cards)
         ArrayList<ACard> solutionCards = findSolutionCards();
 
-        // Now check each category
-        addOthersIfSolutionFound(allSuspects, solutionCards, definitelyHeldCards);
-        addOthersIfSolutionFound(allWeapons, solutionCards, definitelyHeldCards);
-        addOthersIfSolutionFound(allRooms, solutionCards, definitelyHeldCards);
+        this.addOthersIfSolutionFound(allSuspects, solutionCards, definitelyHeldCards);
+        this.addOthersIfSolutionFound(allWeapons, solutionCards, definitelyHeldCards);
+        this.addOthersIfSolutionFound(allRooms, solutionCards, definitelyHeldCards);
     }
 
     /**
@@ -256,13 +254,15 @@ public class ClueGame {
     }
 
     /**
-     * If we found a solution card of this type, add all OTHER cards
-     * of this type to the definitely held list.
+     * Adds all other cards of the same type to the definitely held cards if a
+     * solution card of that type is found.
+     * @param cardsOfType The list of cards of a specific type (suspects, weapons, or rooms).
+     * @param solutionCards The list of solution cards found in the game.
+     * @param definitelyHeldCards The list of cards that are definitely held by players.
      */
     private void addOthersIfSolutionFound(ArrayList<ACard> cardsOfType,
             ArrayList<ACard> solutionCards,
             ArrayList<ACard> definitelyHeldCards) {
-        // Check if any card of this type is in the solution
         ACard solutionCardOfType = null;
         for (ACard card : cardsOfType) {
             if (solutionCards.contains(card)) {
@@ -271,8 +271,6 @@ public class ClueGame {
             }
         }
 
-        // If we found a solution card of this type, all other cards of this type must
-        // be held
         if (solutionCardOfType != null) {
             for (ACard card : cardsOfType) {
                 if (!card.equals(solutionCardOfType) && !definitelyHeldCards.contains(card)) {

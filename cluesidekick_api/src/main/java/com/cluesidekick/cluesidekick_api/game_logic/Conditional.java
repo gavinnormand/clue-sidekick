@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class Conditional {
 
-    // The list of cards that the player definitley has at least one of
+    // The list of cards that the player definitely has at least one of
     ArrayList<ACard> possibleCards;
 
     public Conditional(ArrayList<ACard> possibleCards) {
@@ -15,17 +15,17 @@ public class Conditional {
     }
 
     /**
-     * Returns the card that is definitley held by the player based on the
+     * Returns the card that is definitely held by the player based on the
      * conditional and the cards that the player definitely does not have.
      * 
-     * @param definitleyDontHave - The list of cards that the player definitely does
+     * @param definitelyDontHave - The list of cards that the player definitely does
      *                           not have.
      * @return The card that is definitely held by the player, or errors if not
      *         resolved.
      */
-    public ACard resolve(ArrayList<ACard> definitleyDontHave) {
+    public ACard resolve(ArrayList<ACard> definitelyDontHave) {
         ArrayList<ACard> possibleCards = new ArrayList<>(this.possibleCards);
-        possibleCards.removeAll(definitleyDontHave);
+        possibleCards.removeAll(definitelyDontHave);
         if (possibleCards.size() != 1) {
             return null;
         } else {
