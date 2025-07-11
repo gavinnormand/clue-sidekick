@@ -8,7 +8,7 @@
       type="button"
       @click="select(index)"
       :class="[
-        'cursor-pointer rounded-md px-3 py-1 text-sm transition-colors',
+        'cursor-pointer rounded-lg px-3 py-1 text-sm transition-colors',
         modelValue.includes(option)
           ? 'bg-emerald-600 text-white'
           : 'bg-gray-200 text-black hover:bg-gray-300',

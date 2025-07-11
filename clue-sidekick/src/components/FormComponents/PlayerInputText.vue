@@ -17,7 +17,7 @@
     <div
       v-for="(tag, index) in modelValue"
       :key="index"
-      class="mr-2 mt-2 w-fit flex-col items-center rounded-full bg-gray-200 px-2 text-sm text-black"
+      class="mr-2 mt-2 w-fit flex-col items-center rounded-lg bg-gray-200 px-2 text-sm text-black"
     >
       <div class="flex items-center">
         <p>{{ index + 1 }} . {{ tag }}</p>

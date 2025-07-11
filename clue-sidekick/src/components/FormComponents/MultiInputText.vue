@@ -17,7 +17,7 @@
     <div
       v-for="(tag, index) in modelValue"
       :key="index"
-      class="mr-2 mt-2 inline-flex w-fit items-center rounded-full bg-gray-200 px-2 text-sm text-black"
+      class="mr-2 mt-2 inline-flex w-fit items-center rounded-lg bg-gray-200 px-2 text-sm text-black"
     >
       <p>{{ tag }}</p>
       <button
