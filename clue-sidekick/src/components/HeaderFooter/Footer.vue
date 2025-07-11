@@ -4,15 +4,15 @@ import { Link } from "lucide-vue-next";
 
 <template>
   <div
-    class="bg-background grid grid-cols-2 items-center px-12 py-4 text-white"
+    class="flex items-center justify-between bg-background px-12 py-4 text-white"
   >
     <p>© 2025 Gavin Normand</p>
-    <p class="text-right">
+    <p>
       <a
         href="https://www.gavinnormand.com/"
-        class="flex justify-self-end items-center hover:underline gap-2"
+        class="flex items-center gap-2 hover:underline"
       >
-        <Link /> gavinnormand.com</a
+        <Link class="h-5 w-5" /> gavinnormand.com</a
       >
     </p>
   </div>
