@@ -22,6 +22,7 @@
       <p>{{ tag }}</p>
       <button
         class="pl-1 text-lg text-black hover:text-red-500"
+        tabindex="-1"
         @click.stop="removeTag(index)"
       >
         &times;
