@@ -1,8 +1,6 @@
 import type { GameInfo } from "../components/types";
 
-const API_BASE_URL = import.meta.env.PROD
-  ? "https://clue-sidekick-api.onrender.com/api"
-  : "http://localhost:8080/api";
+const API_BASE_URL = "http://aws.normand.space:8888";
 
 export async function initializeGame(gameInfo: GameInfo, signal?: AbortSignal) {
   const response = await fetch(`${API_BASE_URL}/initialize-game`, {
