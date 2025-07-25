@@ -14,6 +14,7 @@ import {
 import GameWonScreen from "./components/GameWonScreen.vue";
 
 const step = ref(1);
+const loading = ref(false);
 
 const gameInfo = ref<GameInfo>({
   boardInfo: {
@@ -44,6 +45,7 @@ function goToStep2() {
 }
 
 async function goToStep3() {
+  loading.value = true;
   step.value = 3;
 
   try {
@@ -55,6 +57,8 @@ async function goToStep3() {
     console.error("Failed to initialize game:", error);
     alert("Failed to connect to server. Please try again.");
     step.value = 2;
+  } finally {
+    loading.value = false;
   }
 }
 
@@ -133,6 +137,29 @@ function startGameWithSameSettings() {
         @update:modelValue="updateGameInfo"
         @next="goToStep3"
       />
+
+      <div v-if="loading" class="flex flex-1 items-center justify-center">
+        <svg
+          class="h-12 w-12 animate-spin text-emerald-500"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8v8z"
+          ></path>
+        </svg>
+      </div>
 
       <GameView
         v-if="step === 3 && !gameWon"
