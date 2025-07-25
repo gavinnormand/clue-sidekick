@@ -138,31 +138,18 @@ function startGameWithSameSettings() {
         @next="goToStep3"
       />
 
-      <div v-if="loading" class="flex flex-1 items-center justify-center">
-        <svg
-          class="h-12 w-12 animate-spin text-emerald-500"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <circle
-            class="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            stroke-width="4"
-          ></circle>
-          <path
-            class="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8v8z"
-          ></path>
-        </svg>
+      <div
+        v-if="loading"
+        class="flex flex-col items-center gap-y-4 flex-1 justify-center bg-backgroundHover"
+      >
+        <p>Connecting to server ...</p>
+        <div
+          class="border-primary inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-r-transparent"
+        ></div>
       </div>
 
       <GameView
-        v-if="step === 3 && !gameWon"
+        v-if="step === 3 && !gameWon && !loading"
         :modelValue="gameInfo"
         :definitelyHeldCards="definitelyHeldCards"
         @turn-complete="handleTurnComplete"
