@@ -1,7 +1,7 @@
 import type { GameInfo } from "../components/types";
 
 const API_BASE_URL = import.meta.env.PROD
-  ? "https://cluesidekick.normand.space"
+  ? "https://cluesidekick.gavinnormand.com"
   : "http://localhost:8080";
 
 export async function initializeGame(gameInfo: GameInfo, signal?: AbortSignal) {
