@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Link } from "lucide-vue-next";
 </script>
 
 <template>
@@ -12,7 +11,7 @@ import { Link } from "lucide-vue-next";
         href="https://www.gavinnormand.com/"
         class="flex items-center gap-2 hover:underline"
       >
-        <Link class="h-5 w-5" /> gavinnormand.com</a
+        www.gavinnormand.com</a
       >
     </p>
   </div>
